@@ -8,7 +8,7 @@ import {
   View
 } from 'react-native'
 import { Feather } from '@expo/vector-icons'
-import IconText from '../components/iconText'
+import IconText from '../components/IconText'
 
 const City = () => {
   const {

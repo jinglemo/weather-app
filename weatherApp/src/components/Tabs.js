@@ -12,7 +12,18 @@ const Tabs = () => {
     <Tab.Navigator
       screenOptions={{
         tabBarActiveTintColor: 'tomato',
-        tabBarInactiveBackgroundColor: 'grey'
+        tabBarInactiveBackgroundColor: 'grey',
+        tabBarStyle: {
+            backgroundColor: 'lightblue'
+        },
+        headerStyle: { 
+            backgroundColor: 'lightblue'
+        },
+        headerTitleStyle:{
+            color: 'tomato',
+            fontWeight:'bold',
+            fontSize: 25,
+        }
       }}
     >
       <Tab.Screen
