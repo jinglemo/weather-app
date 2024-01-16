@@ -1,8 +1,8 @@
 import React from 'react'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import CurrentWeather from '../screens/CurrentWeather'
 import UpcomingWeather from '../screens/UpcomingWeather'
 import City from '../screens/City'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { Feather } from '@expo/vector-icons'
 
 const Tab = createBottomTabNavigator()
@@ -14,21 +14,20 @@ const Tabs = ({ weather }) => {
         tabBarActiveTintColor: 'tomato',
         tabBarInactiveBackgroundColor: 'grey',
         tabBarStyle: {
-            backgroundColor: 'lightblue'
+          backgroundColor: 'lightblue'
         },
-        headerStyle: { 
-            backgroundColor: 'lightblue'
+        headerStyle: {
+          backgroundColor: 'lightblue'
         },
-        headerTitleStyle:{
-            color: 'tomato',
-            fontWeight:'bold',
-            fontSize: 25,
+        headerTitleStyle: {
+          color: 'tomato',
+          fontWeight: 'bold',
+          fontSize: 25
         }
       }}
     >
       <Tab.Screen
         name={'Current'}
-        component={CurrentWeather}
         options={{
           tabBarIcon: ({ focused }) => (
             <Feather
@@ -38,11 +37,12 @@ const Tabs = ({ weather }) => {
             />
           )
         }}
-      />
+      >
+        {() => <CurrentWeather weatherData={weather.list[0]} />}
+      </Tab.Screen>
 
       <Tab.Screen
         name={'Upcoming'}
-        component={UpcomingWeather}
         options={{
           tabBarIcon: ({ focused }) => (
             <Feather
@@ -52,10 +52,12 @@ const Tabs = ({ weather }) => {
             />
           )
         }}
-      />
+      >
+        {() => <UpcomingWeather weatherData={weather.list} />}
+
+      </Tab.Screen>
       <Tab.Screen
         name={'City'}
-        component={City}
         options={{
           tabBarIcon: ({ focused }) => (
             <Feather
@@ -65,7 +67,9 @@ const Tabs = ({ weather }) => {
             />
           )
         }}
-      />
+      > 
+       {() => <City weatherData={weather.city} />}
+      </Tab.Screen>
     </Tab.Navigator>
   )
 }

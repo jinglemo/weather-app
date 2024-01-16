@@ -4,11 +4,11 @@ import { Feather } from '@expo/vector-icons'
 import RowText from '../components/RowText'
 import { weatherType } from '../utilities/weatherType'
 
-const CurrentWeather = ({weatherData}) => {
+const CurrentWeather = ({ weatherData }) => {
   const {
     wrapper,
     container,
-    temp,
+    tempStyles,
     feels,
     highLow,
     highLowWrapper,
@@ -16,24 +16,37 @@ const CurrentWeather = ({weatherData}) => {
     description,
     message
   } = styles
-console.log(weatherData)
+  const {
+    main: { temp, feels_like, temp_max, temp_min },
+    weather
+  } = weatherData
+  const weatherCondition = weather[0]?.main
   return (
-    <SafeAreaView style={wrapper}>
+    <SafeAreaView
+      style={[
+        wrapper,
+        { backgroundColor: weatherType[weatherCondition]?.backgroundColor }
+      ]}
+    >
       <View style={container}>
-        <Feather name="sun" size={50} color="black" />
-        <Text style={temp}>21</Text>
-        <Text style={feels}>feels 16</Text>
+        <Feather
+          name={weatherType[weatherCondition].icon}
+          size={50}
+          color="white"
+        />
+        <Text style={tempStyles}>{`${temp}°`}</Text>
+        <Text style={feels}>{`Feels like ${feels_like}`}</Text>
         <RowText
-          messageOne={'high: 81'}
-          messageTwo={'low: 67'}
+          messageOne={`High: ${temp_max}° `}
+          messageTwo={`High: ${temp_min}°`}
           containerStyles={highLowWrapper}
           messageOneStyles={highLow}
           messageTwoStyles={highLow}
         />
       </View>
       <RowText
-        messageOne={'Its Sunny'}
-        messageTwo={weatherType['Thunderstorm'].message}
+        messageOne={weather[0]?.description}
+        messageTwo={weatherType[weatherCondition]?.message}
         messageOneStyles={description}
         messageTwoStyles={message}
         containerStyles={bodyWrapper}
@@ -44,15 +57,13 @@ console.log(weatherData)
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
-    backgroundColor: 'pink'
   },
   container: {
-    backgroundColor: 'pink',
     flex: 2,
     alignItems: 'center',
     justifyContent: 'center'
   },
-  temp: {
+  tempStyles: {
     color: 'black',
     fontSize: 48
   },
@@ -74,10 +85,10 @@ const styles = StyleSheet.create({
     marginBottom: 40
   },
   description: {
-    fontSize: 38
+    fontSize: 43
   },
   message: {
-    fontSize: 30
+    fontSize: 25
   }
 })
 
